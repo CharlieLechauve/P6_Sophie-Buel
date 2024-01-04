@@ -4,6 +4,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const mailInput = document.getElementById("email");
     const pwInput = document.getElementById("password");
 
+    pwInput.addEventListener('input', function () {
+        mailInput.classList.remove('login__error');
+        pwInput.classList.remove('login__error');
+        clearErrorMessage();
+    });
+
+    mailInput.addEventListener('input', function () {
+        mailInput.classList.remove('login__error');
+        pwInput.classList.remove('login__error');
+        clearErrorMessage();
+    });
+
     function clearErrorMessage() {
         errorText.innerHTML = "";
     }

@@ -132,6 +132,19 @@ li:hover {
 	margin-bottom: 1em;
 }
 
+.pf-title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.pf-title a {
+	font-size: 14px;
+	text-decoration: none;
+	color: black;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -194,7 +207,7 @@ input[type="submit"]{
 }
 
 /*ADMIN HEADER*/
-.admin__header {
+.admin-top {
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -204,11 +217,77 @@ input[type="submit"]{
 	align-items: center;
 	width: 100%;
 	height: 40px;
+}
+
+.admin-top__reveal {
 	background-color: black;
+	color: white;
 }
 
 .admin__header p, .admin__header .fa-solid {
 	color: white;
+}
+
+/*ADMIN MODALE*/
+.modal {
+	display:flex;
+
+	position:fixed;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.1);
+
+}
+
+.modal-header {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 20px;
+}
+
+.modal-header .fa-xmark {
+	position: absolute;
+	right : 5px;
+}
+
+#modal-gallery {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+	border-radius:10px;
+	width:550px;
+	height:550px;
+	padding: 30px;
+}
+
+#modal-gallery h3 {
+	font-family: 'Work Sans';
+	font-size:26px;
+	font-weight: 400;
+	margin-top: 10px;
+
+}
+
+.modal-gallery__pics {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 40px 40px 40px 60px;
+	padding-bottom: 40px;
+	border-bottom: solid 1px rgb(192, 191, 191);
+}
+
+#modal-gallery img {
+	height:102px;
+	width: 76px;
+	margin-bottom: 10px;;
 }
 
 /* FILTER BUTTON */
