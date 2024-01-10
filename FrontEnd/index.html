@@ -30,41 +30,60 @@
 </aside> 
 
 <aside class="modal" aria-hidden="true" role="dialog" style="display:none;">
-
-	<div id="modal-gallery">
+	<div class="modal-gallery js-stop">
 		<div class="modal-header">
-			<i class="fa-solid fa-xmark"></i>
+			<a class="js-modal-close"><i class="fa-solid fa-xmark"></i></a>
 		</div>
-		<h3> Galerie Photo </h3>
+		<h3 class="modal-title"> Galerie Photo </h3>
 		<div class="modal-gallery__pics">
 			<!--<figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
+				<a class="trash"><i class="fa-solid fa-trash-can"></i></a>
 			</figure> -->
 		</div>
 		<div class="modal-gallery__button">
-			<button class="filter__btn filter__btn--active"> Ajouter une photo </button>
+			<button id="js-modal-change" class="filter__btn filter__btn--active"> Ajouter une photo </button>
 		</div>
 	</div>
+</aside>
 
-	<!-- <div id="modal-add">
-		<div class="modal-header"></div>
-		<div class="modal-body">
-			<h2> Ajout photo </h2>
-		<div class="modal-add__pic"></div>
-		<div class="modal-add__pic-title">
-			<p> Titre </p>
-			<input>
+<aside class="modal2" aria-hidden="true" role="dialog" style="display:none;">
+	<div class="modal-gallery js-stop">
+		<div class="modal-header">
+			<a class="js-modal-back"><i class="fa-solid fa-arrow-left"></i></a>
+			<a class="js-modal-close"><i class="fa-solid fa-xmark"></i></a>
 		</div>
-		<div class="modal-add__pic-category">
-			<p> Catégorie </p>
-			<input>
-		</div>
-		<div class="modal-gallery__button">
-			<button> Ajouter une photo </button>
-		</div>
-		</div>
-	</div> -->
+		<h3 class="modal-title"> Ajouter photo </h3>
+		
+		<form action="" method="POST" onsubmit="return false" novalidate>
+			<div class="ajout-pic-container">
+				<div class="icon-pic-container">
+					<div id="iconContainer">
+						<i class="fa-regular fa-image" style="display:null;"></i>
+					</div>
+					<div id="previewImageContainer"></div> 
+				</div>
 
+				<label for="photo" id="add-pic_label" style="display:null;">
+					<button id="add-pic_button">+ Ajouter photo</button>
+				</label>
+				<input type="file" id="input-hidden" name="photo" accept="image/png, image/jpeg" onchange="previewImage()"/>
+			</div>
+			<label for="title">Titre</label>
+			<input type="text" name="Titre" id="title" class="add-pic_input"  required>
+			
+			<label for="categorie-select">Catégorie</label>
+			<select class="add-pic_input" id="categorie-select">
+				<option value=""></option>
+				<!-- <option value="catégorie"> catégorie </option> -->
+			</select>
+			
+			<div class="modal-gallery__button">
+				<button id="js-modal-add" class="filter__btn filter__btn--active"> Ajouter une photo </button>
+			</div>
+		</form>
+		
+	</div>
 </aside>
 
 <!-- Page de modification des projets -->

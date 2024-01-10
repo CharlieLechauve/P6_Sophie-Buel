@@ -60,6 +60,8 @@ function createWorks(works) {
     figcaption.innerText = works.title;
     figure.setAttribute("categoryId", works.category.id);
 
+    figure.setAttribute("workId", works.id);
+
     //Placement dans DOM
     figure.appendChild(img);
     figure.appendChild(figcaption);
@@ -70,12 +72,29 @@ function createWorks(works) {
 function createModalWorks(works) {
     const modalFigure = document.createElement("figure");
     const modalImg = document.createElement("img");
+    const trashButton = document.createElement("a");
+
+    trashButton.classList.add("trash");
+    trashButton.href = "#"
+    trashButton.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+    modalFigure.setAttribute('workId', works.id);
 
     modalImg.src = works.imageUrl;
 
     modalFigure.appendChild(modalImg);
+    modalFigure.appendChild(trashButton);
     modalGallery.appendChild(modalFigure);
+
+    //queryselector pour supprimer les works
+    document.querySelectorAll('.trash').forEach(link => {
+        link.addEventListener('click', function () {
+            const workId = this.closest('figure').getAttribute('workId');
+            deleteWorks(workId);
+        });
+    });
 }
+
 
 // Fonction filtre associé aux boutons (créés dans la fonction directement)
 async function displayFilters() {
@@ -104,6 +123,7 @@ async function displayFilters() {
                     displayWorks(categoryId);
             });
         });
+
     } catch (error) {
         console.log("Erreur lors de la création des boutons");
     }
@@ -111,7 +131,6 @@ async function displayFilters() {
 
 
 //Fontion quand connecté 
-
 function Admin () {
     if (adminToken) {
         const connect = document.getElementById('login');
@@ -125,6 +144,9 @@ function Admin () {
         });
 
         adminDisplay();
+        displayCatOptions();
+        
+        //addWorks();
     };
 };
 
@@ -147,12 +169,16 @@ function adminDisplay() {
     //Ajout de l'icone
     const editionButton = document.createElement("a");
     editionButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i>' + "modifier";
-    editionButton.href="#modal-gallery";
+    editionButton.href=".modal-gallery";
     editionButton.classList.add('js-modal')
     pfTitle.appendChild(editionButton);
 };
 
+////------------------------/////
+//// APPARITION DES MODALES /////
+////------------------------/////
 let modal = null
+let modal2 = null
 
 const openModal = function (e) {
     e.preventDefault();
@@ -161,18 +187,174 @@ const openModal = function (e) {
     target.removeAttribute('aria-hidden')
     target.setAttribute('aria-modal', 'true')
     modal = target
-    modal.addEventListener(click, closeModal)
+    modal.addEventListener('click', closeModal)
+    modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
+    modal.querySelector('.js-stop').addEventListener('click', stopPropagation)
 }
 
 const closeModal = function (e) {
     if (modal === null) return
     e.preventDefault();
-    modal.style.display = none;
+
+
+    modal.style.display = "none";
     modal.setAttribute('aria-hidden', 'true')
     modal.removeAttribute('aria-modal')
+    modal.removeEventListener('click', closeModal)
+    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
+    modal.querySelector('.js-stop').removeEventListener('click', stopPropagation)
     modal = null
+}
+
+const openModal2 = function (e) {
+    e.preventDefault();
+    const target2 = document.querySelector('.modal2')
+    target2.style.display = null;
+    target2.removeAttribute('aria-hidden')
+    target2.setAttribute('aria-modal', 'true')
+    modal2 = target2
+    modal2.addEventListener('click', closeModal2)
+    modal2.querySelector('.js-modal-close').addEventListener('click', closeModal2)
+    modal2.querySelector('.js-stop').addEventListener('click', stopPropagation)
+}
+
+const closeModal2 = function (e) {
+    if (modal2 === null) return
+    e.preventDefault();
+
+    resetModal(modal2);
+
+    modal2.style.display = "none";
+    modal2.setAttribute('aria-hidden', 'true')
+    modal2.removeAttribute('aria-modal')
+    modal2.removeEventListener('click', closeModal2)
+    modal2.querySelector('.js-modal-close').removeEventListener('click', closeModal2)
+    modal2.querySelector('.js-stop').removeEventListener('click', stopPropagation)
+    modal2 = null
+}
+
+const stopPropagation = function (e) {
+    e.stopPropagation()
+}
+
+function resetModal(modal) {
+    // Réinitialiser les inputs, vider les contenus, etc.
+    const inputs = modal.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.value = ''; // Vider les inputs
+    });
+
+    const imagePreviewContainer = modal.querySelector('#previewImageContainer');
+    const iconContainer = modal.querySelector('#iconContainer');
+    const picLabel = modal.querySelector('#add-pic_label');
+
+    imagePreviewContainer.innerHTML = ''; // Vider le conteneur au cas où il y aurait déjà des images.
+    iconContainer.style.display = "block"; // Afficher à nouveau l'icône
+    picLabel.style.display = "block"; // Afficher à nouveau le label
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click',openModal)
 })
+
+document.querySelectorAll('#js-modal-change').forEach(button => {
+    button.addEventListener('click',openModal2)
+    button.addEventListener('click',closeModal)
+})
+
+document.querySelectorAll('.js-modal-back').forEach(button => {
+    button.addEventListener('click',openModal)
+    button.addEventListener('click',closeModal2)
+})
+
+////----------------------------/////
+//// CHANGEMENT Input <-> Image /////
+////----------------------------/////
+document.getElementById('add-pic_button').addEventListener('click', function () {
+    document.getElementById('input-hidden').click();
+});
+
+document.getElementById('input-hidden').addEventListener('change', function previewImage() {
+    const fileInput = document.getElementById('input-hidden');
+    const file = fileInput.files[0];
+    const imagePreviewContainer = document.getElementById('previewImageContainer');
+    const iconContainer = document.getElementById('iconContainer');
+    const picLabel = document.getElementById('add-pic_label');
+    
+    if(file.type.match('image.*')){
+      const reader = new FileReader();
+      
+      reader.addEventListener('load', function (event) {
+        const imageUrl = event.target.result;
+        const image = new Image();
+        
+        image.addEventListener('load', function() {
+          imagePreviewContainer.innerHTML = '';
+          imagePreviewContainer.appendChild(image);
+          iconContainer.style.display = "none";
+          picLabel.style.display = "none";
+        });
+        
+        image.src = imageUrl;
+      });
+      
+      reader.readAsDataURL(file);
+    }
+  })
+
+
+////----------------------------------------------------------/////
+//// Ajout des catégories dans le menu déroulant de la modale /////
+////----------------------------------------------------------/////
+  async function displayCatOptions() {
+    try {
+        const dataCategories = await getCategories();
+        const selectElement = document.getElementById('categorie-select');
+
+        dataCategories.forEach((category) => {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.innerText = category.name;
+            selectElement.appendChild(option);
+        });
+
+        selectElement.addEventListener('change', function () {
+            const selectedCategoryId = this.value;
+            console.log("Catégorie sélectionnée :", selectedCategoryId);
+        });
+    } catch (error) {
+        console.log("Erreur lors de la création des options de la catégorie");
+    }
+}
+
+////-------------------------/////
+//// Suppression d'un projet /////
+////-------------------------/////
+async function deleteWorks(workId) {
+    const adminToken = sessionStorage.getItem("token")
+    try {
+        if (window.confirm("Voulez vous effacer ce projet ?")) {
+            let response = await fetch(`http://localhost:5678/api/works/${workId}`,{
+                method:"DELETE",
+                headers: {
+                    accept: "*/*",
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            });
+
+            if (response.ok) {
+                console.log("Projet supprimé");
+                displayWorks();
+
+            } else if (response.status === 401) {
+                console.error("Vous n'êtes pas autorisé à effectuer cette action")
+            } 
+        }
+    } catch (error) {
+        console.error("Erreur lors de la suppression", error);
+    }
+};
+
+////-------------------/////
+//// Ajout d'un projet /////
+////-------------------/////

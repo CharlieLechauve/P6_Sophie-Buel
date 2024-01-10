@@ -229,7 +229,7 @@ input[type="submit"]{
 }
 
 /*ADMIN MODALE*/
-.modal {
+.modal, .modal2 {
 	display:flex;
 
 	position:fixed;
@@ -243,22 +243,27 @@ input[type="submit"]{
 
 }
 
-.modal-header {
+.modal-header{
 	display: flex;
 	position: relative;
 	width: 100%;
 	height: 20px;
 }
 
-.modal-header .fa-xmark {
+.modal-header .js-modal-close {
 	position: absolute;
 	right : 5px;
 }
 
-#modal-gallery {
+.modal-header .js-modal-back {
+	position: absolute;
+	left : 5px;
+}
+
+.modal-gallery {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	background-color: white;
 	border-radius:10px;
@@ -267,28 +272,85 @@ input[type="submit"]{
 	padding: 30px;
 }
 
-#modal-gallery h3 {
+.ajout-pic-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	align-items: center;
+}
+
+.icon-pic-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ajout-pic-container {
+	width: 420px;
+	height: 169px;
+	background-color: #E8F1F6;
+}
+
+.fa-image {
+	color: grey;
+	font-size: 80px;
+}
+
+.modal-gallery h3 {
 	font-family: 'Work Sans';
 	font-size:26px;
 	font-weight: 400;
 	margin-top: 10px;
-
 }
 
 .modal-gallery__pics {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin: 40px 40px 40px 60px;
-	padding-bottom: 40px;
+	margin: 40px 40px 0 60px;
 	border-bottom: solid 1px rgb(192, 191, 191);
 }
 
-#modal-gallery img {
+.modal-gallery__pics figure {
+position: relative;
+}
+
+.modal-gallery__pics a {
+	position:absolute;
+	right: 5px;
+	top: 5px;
+
+	border-radius: 5px;
+	padding-top: 5px;
+	height: 15px;
+	width: 17px;
+
+	background-color: black;
+	text-align: center;
+	font-size: 11px;
+	color: white;
+}
+
+.modal-gallery img {
 	height:102px;
 	width: 76px;
 	margin-bottom: 10px;;
 }
+
+#input-hidden {
+	display: none;
+}
+
+.add-pic_input {
+	height: 50px;
+    font-size: 1.2em;
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width: 420px;
+}
+
 
 /* FILTER BUTTON */
 html {
@@ -394,3 +456,13 @@ footer nav ul {
 	transition: all 0.5s ease;
 }
 
+#previewImageContainer {
+	display: flex;
+    justify-content: center;
+}
+
+#previewImageContainer img {
+	height: 169px;
+	width: 100%;
+	margin-top: 10px;
+}
