@@ -86,12 +86,9 @@ function createModalWorks(works) {
     modalFigure.appendChild(trashButton);
     modalGallery.appendChild(modalFigure);
 
-    //queryselector pour supprimer les works
-    document.querySelectorAll('.trash').forEach(link => {
-        link.addEventListener('click', function () {
-            const workId = this.closest('figure').getAttribute('workId');
-            deleteWorks(workId);
-        });
+    trashButton.addEventListener('click', function () {
+        const workId = modalFigure.getAttribute('workId');
+        deleteWorks(workId);
     });
 }
 
@@ -146,7 +143,7 @@ function Admin () {
         adminDisplay();
         displayCatOptions();
         
-        //addWorks();
+        addWork();
     };
 };
 
@@ -330,6 +327,12 @@ document.getElementById('input-hidden').addEventListener('change', function prev
 ////-------------------------/////
 //// Suppression d'un projet /////
 ////-------------------------/////
+
+function resetModalGallery() {
+    const modalGallery = document.querySelector('.modal-gallery__pics');
+    modalGallery.innerHTML = '';
+}
+
 async function deleteWorks(workId) {
     const adminToken = sessionStorage.getItem("token")
     try {
@@ -344,7 +347,8 @@ async function deleteWorks(workId) {
 
             if (response.ok) {
                 console.log("Projet supprimé");
-                displayWorks();
+                resetModalGallery();
+                await displayWorks();
 
             } else if (response.status === 401) {
                 console.error("Vous n'êtes pas autorisé à effectuer cette action")
@@ -355,6 +359,60 @@ async function deleteWorks(workId) {
     }
 };
 
+
+
+
 ////-------------------/////
 //// Ajout d'un projet /////
 ////-------------------/////
+
+async function addWork() {
+    const form = document.getElementById("modal-add-pics");
+    const addTitle = document.querySelector(".add-pic_input");
+    const addCategory = document.getElementById("categorie-select");
+    const addPhoto = document.getElementById("input-hidden");
+
+    if (!addTitle || !addCategory || !addPhoto) {
+        console.error("Certains éléments ne sont pas présents dans le DOM.");
+        return;
+    }
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (addPhoto.files.length > 0 && addTitle.value !== "" && addCategory.value !== "") {
+            try {
+                let formData = new FormData();
+                formData.append("title", addTitle.value);
+                formData.append("image", addPhoto.files[0]);
+                formData.append("category", parseInt(addCategory.value));
+
+                const response = await fetch(`http://localhost:5678/api/works`, {
+                    method: "POST",
+                    headers: {
+                        accept: "*/*",
+                        Authorization: `Bearer ${adminToken}`,
+                    },
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    console.log("Succès");
+                    form.reset();
+
+                    resetModalGallery();
+                    await displayWorks();
+
+                    resetModal(modal2);
+
+                } else {
+                    console.log("Erreur");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la requête :", error);
+            }
+        } else {
+            console.error("Veuillez remplir tous les champs.");
+        }
+    });
+}

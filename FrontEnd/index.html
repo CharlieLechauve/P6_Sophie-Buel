@@ -55,7 +55,7 @@
 		</div>
 		<h3 class="modal-title"> Ajouter photo </h3>
 		
-		<form action="" method="POST" onsubmit="return false" novalidate>
+		<form id="modal-add-pics" method="POST">
 			<div class="ajout-pic-container">
 				<div class="icon-pic-container">
 					<div id="iconContainer">
@@ -67,7 +67,7 @@
 				<label for="photo" id="add-pic_label" style="display:null;">
 					<button id="add-pic_button">+ Ajouter photo</button>
 				</label>
-				<input type="file" id="input-hidden" name="photo" accept="image/png, image/jpeg" onchange="previewImage()"/>
+				<input type="file" id="input-hidden" name="photo" accept="image/png, image/jpeg"/>
 			</div>
 			<label for="title">Titre</label>
 			<input type="text" name="Titre" id="title" class="add-pic_input"  required>
