@@ -96,6 +96,15 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav li a {
+	text-decoration: none;
+	color: black;
+}
+
+#login_text {
+	font-weight: 600;
+}
+
 li:hover {
 	color: #B1663C;
 }
@@ -136,7 +145,7 @@ li:hover {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 10px;
+	gap: 30px;
 }
 
 .pf-title a {
@@ -252,18 +261,19 @@ input[type="submit"]{
 
 .modal-header .js-modal-close {
 	position: absolute;
+	font-size: 30px;
 	right : 5px;
 }
 
 .modal-header .js-modal-back {
 	position: absolute;
+	font-size: 30px;
 	left : 5px;
 }
 
 .modal-gallery {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	align-items: center;
 	background-color: white;
 	border-radius:10px;
@@ -285,6 +295,7 @@ input[type="submit"]{
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	width: 30%;
 }
 
 .ajout-pic-container {
@@ -309,12 +320,13 @@ input[type="submit"]{
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin: 40px 40px 0 60px;
+	margin: 40px 40px 20px 60px;
+	padding-bottom: 40px;
 	border-bottom: solid 1px rgb(192, 191, 191);
 }
 
 .modal-gallery__pics figure {
-position: relative;
+	position: relative;
 }
 
 .modal-gallery__pics a {
@@ -333,10 +345,22 @@ position: relative;
 	color: white;
 }
 
-.modal-gallery img {
-	height:102px;
-	width: 76px;
+.modal-gallery figure {
+	max-height:102px;
+	width: 20%;
 	margin-bottom: 10px;;
+}
+
+.modal-gallery img {
+	width: 100%;
+	height: 100%;
+}
+
+.div_form {
+	display: flex;
+    flex-direction: column;
+    gap: 20px;
+	padding: 20px 0 20px 0;
 }
 
 #input-hidden {
@@ -349,6 +373,30 @@ position: relative;
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	width: 420px;
+}
+
+.modal-title {
+	font-family: "Work-sans";
+	font-size: 26px;
+	font-weight: 400;
+}
+
+.modal2 .modal-gallery__button {
+	height: 20%;
+	width: 100%;
+	border-top: solid 1px rgb(192, 191, 191);
+	position: relative;
+}
+
+.modal2 .modal-gallery__button button {
+	position: absolute;
+    left: 35%;
+    top: 25px;
+}
+
+.modal2 label {
+	font-size: 14px;
+	font-weight: 500;
 }
 
 
@@ -396,6 +444,11 @@ html {
 
 .login a:hover {
 	color: #B1663C;
+}
+
+#login__error {
+	color: red;
+    padding: 10px;
 }
 
 /* FOOTER */
@@ -463,6 +516,12 @@ footer nav ul {
 
 #previewImageContainer img {
 	height: 169px;
-	width: 100%;
-	margin-top: 10px;
+	max-width: 100%;
+	object-fit: cover;
+}
+
+figcaption {
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+	font-weight: 400;
 }

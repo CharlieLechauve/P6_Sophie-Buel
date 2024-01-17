@@ -55,7 +55,9 @@
 		</div>
 		<h3 class="modal-title"> Ajouter photo </h3>
 		
+		
 		<form id="modal-add-pics" method="POST">
+			<div class="div_form">
 			<div class="ajout-pic-container">
 				<div class="icon-pic-container">
 					<div id="iconContainer">
@@ -79,9 +81,11 @@
 			</select>
 			
 			<div class="modal-gallery__button">
-				<button id="js-modal-add" class="filter__btn filter__btn--active"> Ajouter une photo </button>
+				<button id="js-modal-add" class="filter__btn filter__btn--active" disabled="true"> Valider </button>
+			</div>
 			</div>
 		</form>
+		
 		
 	</div>
 </aside>
@@ -94,8 +98,8 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
 			<li id="login"><a href="./login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>

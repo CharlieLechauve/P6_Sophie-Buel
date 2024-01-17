@@ -86,7 +86,8 @@ function createModalWorks(works) {
     modalFigure.appendChild(trashButton);
     modalGallery.appendChild(modalFigure);
 
-    trashButton.addEventListener('click', function () {
+    trashButton.addEventListener('click', function (e) {
+        e.preventDefault();
         const workId = modalFigure.getAttribute('workId');
         deleteWorks(workId);
     });
@@ -267,7 +268,8 @@ document.querySelectorAll('.js-modal-back').forEach(button => {
 ////----------------------------/////
 //// CHANGEMENT Input <-> Image /////
 ////----------------------------/////
-document.getElementById('add-pic_button').addEventListener('click', function () {
+document.getElementById('add-pic_button').addEventListener('click', function (e) {
+    e.preventDefault();
     document.getElementById('input-hidden').click();
 });
 
@@ -371,11 +373,18 @@ async function addWork() {
     const addTitle = document.querySelector(".add-pic_input");
     const addCategory = document.getElementById("categorie-select");
     const addPhoto = document.getElementById("input-hidden");
+    const submitButton = document.getElementById("js-modal-add");
+    
 
     if (!addTitle || !addCategory || !addPhoto) {
         console.error("Certains éléments ne sont pas présents dans le DOM.");
         return;
     }
+
+    form.addEventListener("input", function () {
+        const isFormValid = addPhoto.files.length > 0 && addTitle.value !== "" && addCategory.value !== "";
+        submitButton.disabled = !isFormValid; // Active ou désactive le bouton en fonction de la validité du formulaire
+    });
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
