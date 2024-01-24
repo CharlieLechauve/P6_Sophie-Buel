@@ -427,6 +427,8 @@ async function addWork() {
                     await displayWorks();
 
                     resetModal(modal2);
+                    modal2.style.display = "none";
+
 
                 } else {
                     console.log("Erreur");

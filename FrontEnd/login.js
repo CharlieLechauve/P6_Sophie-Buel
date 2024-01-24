@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: mail, password: pw }), // Utilisez les variables mail et pw
+                body: JSON.stringify({ email: mail, password: pw }), 
             });
 
             if (apiResponse.status === 200) {
