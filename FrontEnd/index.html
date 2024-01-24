@@ -70,6 +70,7 @@
 					<button id="add-pic_button">+ Ajouter photo</button>
 				</label>
 				<input type="file" id="input-hidden" name="photo" accept="image/png, image/jpeg"/>
+				<p id="img_info" style="display:null">jpg, png : 4mo max</p>
 			</div>
 			<label for="title">Titre</label>
 			<input type="text" name="Titre" id="title" class="add-pic_input"  required>
@@ -81,7 +82,7 @@
 			</select>
 			
 			<div class="modal-gallery__button">
-				<button id="js-modal-add" class="filter__btn filter__btn--active" disabled="true"> Valider </button>
+				<button id="js-modal-add" class="valid_btn" disabled="true"> Valider </button>
 			</div>
 			</div>
 		</form>

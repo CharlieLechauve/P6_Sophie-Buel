@@ -374,6 +374,7 @@ async function addWork() {
     const addCategory = document.getElementById("categorie-select");
     const addPhoto = document.getElementById("input-hidden");
     const submitButton = document.getElementById("js-modal-add");
+    const textImg = document.getElementById("img_info");
     
 
     if (!addTitle || !addCategory || !addPhoto) {
@@ -384,6 +385,19 @@ async function addWork() {
     form.addEventListener("input", function () {
         const isFormValid = addPhoto.files.length > 0 && addTitle.value !== "" && addCategory.value !== "";
         submitButton.disabled = !isFormValid; // Active ou désactive le bouton en fonction de la validité du formulaire
+
+        if (isFormValid) {
+            submitButton.classList.add("valid_btn--active");
+        } else {
+            submitButton.classList.remove("valid_btn--active");
+        }
+
+        if (addPhoto.files.length > 0) {
+            textImg.style.display = "none"
+        } else {
+            textImg.style.display = "null"
+        }
+
     });
 
     form.addEventListener("submit", async function (event) {
