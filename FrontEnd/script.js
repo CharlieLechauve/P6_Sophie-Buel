@@ -428,6 +428,7 @@ async function addWork() {
 
                     resetModal(modal2);
                     modal2.style.display = "none";
+                    submitButton.classList.remove("valid_btn--active");
 
 
                 } else {
